@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://c65wlxwb1htao"]
+
+[ext_resource type="Material" uid="uid://cn1gsy15bkaff" path="res://textures/grid.tres" id="1_6ju7g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1gcsj"]
+size = Vector3(0.1, 5, 15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_12afl"]
+material = ExtResource("1_6ju7g")
+size = Vector3(0.1, 5, 15)
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_uhql4"]
+material = ExtResource("1_6ju7g")
+radius = 0.1
+radial_steps = 3
+sections = 100
+section_length = 1.0
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_s48ae"]
+material = ExtResource("1_6ju7g")
+radius = 0.1
+radial_steps = 3
+sections = 7
+
+[node name="Node3D" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_1gcsj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+layers = 1048575
+gi_mode = 0
+mesh = SubResource("BoxMesh_12afl")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -50, 0)
+mesh = SubResource("TubeTrailMesh_uhql4")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(-4.37114e-08, -1.11817, 0, 1, -4.88769e-08, 0, 0, 0, 1, 0.802701, 0, 0)
+mesh = SubResource("TubeTrailMesh_s48ae")

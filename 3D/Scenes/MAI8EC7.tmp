@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://cxn6ucvvchh5w"]
+
+[ext_resource type="PackedScene" uid="uid://dyauqgmtp0gw" path="res://Scenes/Player.tscn" id="1_g2yp0"]
+[ext_resource type="PackedScene" uid="uid://kv08fdwyc03e" path="res://Scenes/floor.tscn" id="2_guvaf"]
+[ext_resource type="PackedScene" uid="uid://c65wlxwb1htao" path="res://Scenes/Wall.tscn" id="3_ybhm7"]
+[ext_resource type="Shader" path="res://Sky.gdshader" id="4_k8ltv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gmn8s"]
+shader = ExtResource("4_k8ltv")
+shader_parameter/baseColor = Color(0, 0.64, 0.84, 1)
+shader_parameter/horizonColor = Color(0.36, 0.59, 0.86, 1)
+shader_parameter/horizonHeight = -0.2
+shader_parameter/rayleighCoefficient = 0.2
+shader_parameter/mieCoefficient = null
+shader_parameter/mieEccentricity = 0.8
+shader_parameter/sunDiskScale = 0.2
+shader_parameter/sunSmoothing = 0.5
+
+[sub_resource type="Sky" id="Sky_njm3p"]
+sky_material = SubResource("ShaderMaterial_gmn8s")
+
+[sub_resource type="Environment" id="Environment_1jm1m"]
+background_mode = 2
+sky = SubResource("Sky_njm3p")
+ambient_light_source = 3
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1jm1m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.328966, 0.944342, 0, -0.944342, 0.328966, 0, -1.56476, 0)
+
+[node name="Player" parent="." instance=ExtResource("1_g2yp0")]
+
+[node name="Floor" parent="." instance=ExtResource("2_guvaf")]
+
+[node name="Wall" parent="." instance=ExtResource("3_ybhm7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5829, 5.25922, -23.4672)
+
+[node name="floor 3]" parent="." instance=ExtResource("2_guvaf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -50)
+
+[node name="floor 2" parent="." instance=ExtResource("2_guvaf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 10, -50)
+
+[node name="Node3D" parent="." instance=ExtResource("3_ybhm7")]
+transform = Transform3D(-0.654741, 0, -0.755853, 0, 1, 0, 0.755853, 0, -0.654741, -34.609, 10, -10)

@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://kv08fdwyc03e"]
+
+[ext_resource type="Material" uid="uid://cn1gsy15bkaff" path="res://textures/grid.tres" id="1_738fe"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_nm13d"]
+material = ExtResource("1_738fe")
+size = Vector3(25, 100, 25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s05dc"]
+size = Vector3(25, 0.1, 25)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, -50)
+mesh = SubResource("BoxMesh_nm13d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -50)
+shape = SubResource("BoxShape3D_s05dc")
+
+[node name="Camera3D" type="Camera3D" parent="StaticBody3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2, -50)

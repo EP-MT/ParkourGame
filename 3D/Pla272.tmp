@@ -1,0 +1,188 @@
+[gd_scene load_steps=7 format=3 uid="uid://e07nxpuvvsnc"]
+
+[sub_resource type="GDScript" id="GDScript_8xwkx"]
+script/source = "extends CharacterBody3D
+
+var mouse_sensitivity := 0.001
+var twist_input := 0.0
+var pitch_input := 0.0
+var jump_counter = 0
+var can_wall_run = false
+
+@onready var twist_pivot := $TwistPivot
+@onready var pitch_pivot := $TwistPivot/PitchPivot
+@onready var camera := $TwistPivot/PitchPivot/Camera3D
+@onready var animation_player := $TwistPivot/PitchPivot/Camera3D/AnimationPlayer
+@onready var raycast = $RayCast3D
+
+func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	animation_player.play(\"Head Bob\")
+	animation_player.stop()
+	
+const SPEED = 10.0
+const JUMP_VELOCITY = 15
+var gravity = 30
+
+func _physics_process(delta):
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+
+	if is_on_floor():
+		jump_counter = 0
+		can_wall_run = true
+
+	handle_movement(delta)
+	handle_wall_run()
+	handle_camera_bob()
+
+
+	if Input.is_action_just_pressed(\"esc\"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+	twist_pivot.rotate_y(twist_input)
+	pitch_pivot.rotate_x(pitch_input)
+	pitch_pivot.rotation.x = clamp(pitch_pivot.rotation.x, deg_to_rad(-60), deg_to_rad(60))
+	
+	move_and_slide()
+
+	twist_input = 0.0
+	pitch_input = 0.0
+	
+	if raycast.is_colliding():
+		var collider = raycast.get_collider()
+		print(\"Raycast hit: \", collider.name)
+		twist_pivot.rotate.x(20)
+
+	else:
+		print(\"Raycast did not hit anything.\")
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+			twist_input = -event.relative.x * mouse_sensitivity
+			pitch_input = -event.relative.y * mouse_sensitivity
+
+func handle_movement(delta):
+	var input_dir = Input.get_vector(\"right\", \"left\", \"down\", \"up\")
+	var direction = Vector3(input_dir.x, 0, input_dir.y).rotated(Vector3.UP, twist_pivot.rotation.y).normalized()
+
+	if direction:
+		velocity.x = direction.x * SPEED
+		velocity.z = direction.z * SPEED 
+		if Input.is_action_pressed(\"shift\") and is_on_floor():
+			velocity.x *= 1.5
+			velocity.z *= 1.5
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.z = move_toward(velocity.z, 0, SPEED)
+
+	if input_dir.x > 0:
+		twist_pivot.rotation.z = lerp_angle(twist_pivot.rotation.z, deg_to_rad(2.5), 0.05)
+	elif input_dir.x < 0:
+		twist_pivot.rotation.z = lerp_angle(twist_pivot.rotation.z, deg_to_rad(-2.5), 0.05)
+	else:
+		twist_pivot.rotation.z = lerp_angle(twist_pivot.rotation.z, deg_to_rad(0), 0.05)
+
+	if Input.is_action_just_pressed(\"jump\") and jump_counter < 1:
+		velocity.y = JUMP_VELOCITY
+		jump_counter += 1
+
+func handle_wall_run():
+	if Input.is_action_pressed(\"jump\") and Input.is_action_pressed(\"up\") and is_on_wall():
+		if can_wall_run:
+			
+			var input_dir = Input.get_vector(\"right\", \"left\", \"down\", \"up\")
+			var direction = Vector3(input_dir.x, 0, input_dir.y).rotated(Vector3.UP, twist_pivot.rotation.y).normalized()
+			velocity.y = 0
+			
+			jump_counter = 0
+			var stick_to_thefucknwall = get_wall_normal()
+			await get_tree().create_timer(0.2).timeout
+			direction = stick_to_thefucknwall * SPEED
+			
+			await get_tree().create_timer(2.3).timeout
+			
+			can_wall_run = false
+
+func handle_camera_bob():
+	var input_dir = Input.get_vector(\"right\", \"left\", \"down\", \"up\")
+	if input_dir.length() > 0 and is_on_floor():
+		if not animation_player.is_playing():
+			animation_player.play(\"Head Bob\")
+	else:
+		if animation_player.is_playing():
+			animation_player.stop()
+			camera.position.y = 3
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5yt0e"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7p6rr"]
+
+[sub_resource type="Animation" id="Animation_cwy2o"]
+resource_name = "Head Bob"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 3, -0.5), Vector3(0, 3.1, -0.5), Vector3(0, 3, -0.5), Vector3(0, 3.1, -0.5), Vector3(0, 3, -0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_oeo87"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 3, -0.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yd0od"]
+_data = {
+"Head Bob": SubResource("Animation_cwy2o"),
+"RESET": SubResource("Animation_oeo87")
+}
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+script = SubResource("GDScript_8xwkx")
+metadata/_edit_group_ = true
+
+[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+target_position = Vector3(2, 0, 0)
+
+[node name="Body" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.74962, 0)
+shape = SubResource("BoxShape3D_5yt0e")
+
+[node name="skin" type="MeshInstance3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.73617, 0)
+mesh = SubResource("CapsuleMesh_7p6rr")
+
+[node name="TwistPivot" type="Node3D" parent="CharacterBody3D"]
+
+[node name="PitchPivot" type="Node3D" parent="CharacterBody3D/TwistPivot"]
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/TwistPivot/PitchPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -0.5)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody3D/TwistPivot/PitchPivot/Camera3D"]
+libraries = {
+"": SubResource("AnimationLibrary_yd0od")
+}

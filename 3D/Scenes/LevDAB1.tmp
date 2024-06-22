@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=3 uid="uid://cxn6ucvvchh5w"]
+
+[ext_resource type="PackedScene" uid="uid://bn06y04ubv4xt" path="res://Scenes/Player.tscn" id="1_g2yp0"]
+[ext_resource type="PackedScene" uid="uid://kv08fdwyc03e" path="res://Scenes/floor.tscn" id="2_guvaf"]
+[ext_resource type="PackedScene" uid="uid://c65wlxwb1htao" path="res://Scenes/Wall.tscn" id="3_ybhm7"]
+[ext_resource type="Shader" path="res://shaders/Sky.gdshader" id="4_k8ltv"]
+[ext_resource type="PackedScene" uid="uid://323k2nvmw6nc" path="res://Scenes/Stairs.tscn" id="5_2wfuc"]
+
+[sub_resource type="GDScript" id="GDScript_3xfv0"]
+script/source = "extends Node3D
+class_name Main
+
+@onready var ui = $UI
+
+func _input(event):
+	if event.is_action_pressed(\"Tab\"):
+		"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gmn8s"]
+shader = ExtResource("4_k8ltv")
+shader_parameter/baseColor = Color(0, 0.64, 0.84, 1)
+shader_parameter/horizonColor = Color(0.36, 0.59, 0.86, 1)
+shader_parameter/horizonHeight = -0.2
+shader_parameter/rayleighCoefficient = 0.2
+shader_parameter/mieCoefficient = null
+shader_parameter/mieEccentricity = 0.8
+shader_parameter/sunDiskScale = 0.2
+shader_parameter/sunSmoothing = 0.5
+
+[sub_resource type="Sky" id="Sky_njm3p"]
+sky_material = SubResource("ShaderMaterial_gmn8s")
+
+[sub_resource type="Environment" id="Environment_1jm1m"]
+background_mode = 2
+sky = SubResource("Sky_njm3p")
+ambient_light_source = 3
+
+[node name="Node3D" type="Node3D"]
+script = SubResource("GDScript_3xfv0")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1jm1m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.328966, 0.944342, 0, -0.944342, 0.328966, 0, -1.56476, 0)
+
+[node name="Player" parent="." instance=ExtResource("1_g2yp0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -5)
+
+[node name="Floor" parent="." instance=ExtResource("2_guvaf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.8787, 0, -5)
+
+[node name="Wall" parent="." instance=ExtResource("3_ybhm7")]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 0, 3, -25)
+
+[node name="Wall2" parent="." instance=ExtResource("3_ybhm7")]
+transform = Transform3D(-0.717956, 0.00709514, -0.696052, 0.00722472, 0.99997, 0.00274104, 0.696051, -0.00306085, -0.717986, -50, 10, -23.1974)
+
+[node name="floor 2" parent="." instance=ExtResource("2_guvaf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 10, -50)
+
+[node name="floor 3" parent="." instance=ExtResource("2_guvaf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.61361, -8.47158, -50)
+
+[node name="Stairs" parent="." instance=ExtResource("5_2wfuc")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -27.7565, 0.434498, -50.0271)
