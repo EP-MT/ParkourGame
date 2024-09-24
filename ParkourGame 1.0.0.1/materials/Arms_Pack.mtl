@@ -1,0 +1,26 @@
+# Blender 4.1.1 MTL File: 'Arms_Pack.blend1'
+# www.blender.org
+
+newmtl gloves
+Ns 573.313660
+Ka 0.070000 0.070000 0.070000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd -o 0 -1 0 D:/For Turbo Squid Sell/Fps Arm/3/textures/glovescolor.png
+map_Ks -o 0 -1 0 D:/For Turbo Squid Sell/Fps Arm/3/textures/glovesSpecular.png
+map_refl -o 0 -1 0 D:/For Turbo Squid Sell/Fps Arm/3/textures/glovesSpecular.png
+map_Bump -o 0 -1 0 -bm 1.000000 D:/For Turbo Squid Sell/Fps Arm/3/textures/glovesNormal.png
+
+newmtl sleeves
+Ns 319.999939
+Ka 0.010000 0.010000 0.010000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd -o 0 -1 0 D:/For Turbo Squid Sell/Fps Arm/3/textures/armcolor.png
+map_Ks -o 0 -1 0 D:/For Turbo Squid Sell/Fps Arm/3/textures/armpecular.png
+map_refl -o 0 -1 0 D:/For Turbo Squid Sell/Fps Arm/3/textures/armpecular.png
+map_Bump -o 0 -1 0 -bm 1.000000 D:/For Turbo Squid Sell/Fps Arm/3/textures/armNormal.png

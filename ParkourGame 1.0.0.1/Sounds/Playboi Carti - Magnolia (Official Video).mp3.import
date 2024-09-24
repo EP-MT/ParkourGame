@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://583qrv71h4tu"
+path="res://.godot/imported/Playboi Carti - Magnolia (Official Video).mp3-a3c87d3855c7f62b508cf2602b993c9a.mp3str"
+
+[deps]
+
+source_file="res://Sounds/Playboi Carti - Magnolia (Official Video).mp3"
+dest_files=["res://.godot/imported/Playboi Carti - Magnolia (Official Video).mp3-a3c87d3855c7f62b508cf2602b993c9a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

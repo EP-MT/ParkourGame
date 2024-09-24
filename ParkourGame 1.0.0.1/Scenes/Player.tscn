@@ -1,0 +1,268 @@
+[gd_scene load_steps=22 format=3 uid="uid://bn06y04ubv4xt"]
+
+[ext_resource type="Script" path="res://Scenes/PlayerController.gd" id="1_7tink"]
+[ext_resource type="AudioStream" uid="uid://cvkoww5vhduu3" path="res://Sounds/footstep1.wav" id="2_hnwxp"]
+[ext_resource type="AudioStream" uid="uid://dfhxm37li65us" path="res://Sounds/footstep2.wav" id="3_f8jfk"]
+[ext_resource type="AudioStream" uid="uid://clfn6dcwjflv5" path="res://Sounds/footstep3.wav" id="4_e1et5"]
+[ext_resource type="AudioStream" uid="uid://no4si6et125l" path="res://Sounds/footstep4.wav" id="5_cqgux"]
+[ext_resource type="AudioStream" uid="uid://d182rvrdg68px" path="res://Sounds/footstep5.wav" id="6_0y2mk"]
+[ext_resource type="AudioStream" uid="uid://6qh36mvnk1ln" path="res://Sounds/6.wav" id="7_obppj"]
+[ext_resource type="AudioStream" uid="uid://b7h7cjcl05k42" path="res://Sounds/7.wav" id="8_7uoxb"]
+[ext_resource type="AudioStream" uid="uid://dergkbypkxa58" path="res://Sounds/8.wav" id="9_deluw"]
+[ext_resource type="AudioStream" uid="uid://dddvh7toniakl" path="res://Sounds/9.wav" id="10_xelb3"]
+[ext_resource type="AudioStream" uid="uid://b43oj4kpr47gb" path="res://Sounds/10.wav" id="11_ur2oq"]
+[ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="12_piw2p"]
+[ext_resource type="PackedScene" uid="uid://fn4ue284pmgv" path="res://motion_blur/motion_blur.tscn" id="12_vvr8m"]
+[ext_resource type="PackedScene" uid="uid://cehv4e5f438dd" path="res://textures/grapple_gun.tscn" id="14_h10sx"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dc004"]
+playback_mode = 2
+streams_count = 10
+stream_0/stream = ExtResource("2_hnwxp")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("3_f8jfk")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("4_e1et5")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("5_cqgux")
+stream_3/weight = 0.0
+stream_4/stream = ExtResource("6_0y2mk")
+stream_4/weight = 0.0
+stream_5/stream = ExtResource("7_obppj")
+stream_5/weight = 0.0
+stream_6/stream = ExtResource("8_7uoxb")
+stream_6/weight = 0.0
+stream_7/stream = ExtResource("9_deluw")
+stream_7/weight = 0.0
+stream_8/stream = ExtResource("10_xelb3")
+stream_8/weight = 0.0
+stream_9/stream = ExtResource("11_ur2oq")
+stream_9/weight = 0.0
+
+[sub_resource type="Animation" id="Animation_u0ahe"]
+resource_name = "Crouch"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:shape:height")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1, 0), Vector3(0, 0.75, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("skin:mesh:height")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.5]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("skin:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1, 0), Vector3(0, 0.75, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TwistPivot:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1.5, 0), Vector3(0, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7tmra"]
+resource_name = "HeadBob"
+
+[sub_resource type="Animation" id="Animation_y76kt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:shape:height")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("skin:mesh:height")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("skin:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TwistPivot:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.5, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eu133"]
+_data = {
+"Crouch": SubResource("Animation_u0ahe"),
+"HeadBob": SubResource("Animation_7tmra"),
+"RESET": SubResource("Animation_y76kt")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_eqxoo"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ip60c"]
+material = ExtResource("12_piw2p")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." groups=["Player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.90735e-05, 0.00741279, 0.003093)
+script = ExtResource("1_7tink")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CharacterBody3D"]
+stream = SubResource("AudioStreamRandomizer_dc004")
+volume_db = -1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody3D"]
+libraries = {
+"": SubResource("AnimationLibrary_eu133")
+}
+
+[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(2, 0, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(-2, 0, 0)
+
+[node name="coruch_checker" type="RayCast3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 1.5, 0)
+
+[node name="Body" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_eqxoo")
+
+[node name="skin" type="MeshInstance3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_ip60c")
+
+[node name="TwistPivot" type="Node3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="PitchPivot" type="Node3D" parent="CharacterBody3D/TwistPivot"]
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/TwistPivot/PitchPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)
+
+[node name="motion_blur" parent="CharacterBody3D/TwistPivot/PitchPivot/Camera3D" instance=ExtResource("12_vvr8m")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.36288, -1.72253)
+skeleton = NodePath("../../../..")
+
+[node name="GrappleCast" type="RayCast3D" parent="CharacterBody3D/TwistPivot/PitchPivot/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.305772, -0.205295, -0.385021)
+target_position = Vector3(0, 0, -20)
+hit_from_inside = true
+debug_shape_custom_color = Color(0, 1, 0, 1)
+
+[node name="MeshInstance3D" parent="CharacterBody3D/TwistPivot/PitchPivot/Camera3D" instance=ExtResource("14_h10sx")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.3, -0.2, -0.2)
+
+[node name="Muzzle" type="Node3D" parent="CharacterBody3D/TwistPivot/PitchPivot/Camera3D/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.00123185, -0.203655, -0.00234246)
+
+[node name="UI" type="CanvasLayer" parent="CharacterBody3D/TwistPivot/PitchPivot/Camera3D"]
+
+[node name="Label" type="Label" parent="CharacterBody3D/TwistPivot/PitchPivot/Camera3D/UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+size_flags_horizontal = 0
+
+[node name="Label2" type="Label" parent="CharacterBody3D/TwistPivot/PitchPivot/Camera3D/UI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "."
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://ducuoa0bxubm3"]
+
+[ext_resource type="Script" path="res://Scenes/Hole.gd" id="1_mn50n"]
+[ext_resource type="Material" uid="uid://cn1gsy15bkaff" path="res://textures/grid.tres" id="1_od84y"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ti7hj"]
+material = ExtResource("1_od84y")
+size = Vector3(1, 4, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u63uw"]
+material = ExtResource("1_od84y")
+
+[sub_resource type="BoxMesh" id="BoxMesh_2u5rv"]
+material = ExtResource("1_od84y")
+size = Vector3(1.5, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o4mmv"]
+size = Vector3(5, 5, 1.5)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_mn50n")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75, 1.5, 0)
+mesh = SubResource("BoxMesh_ti7hj")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D/MeshInstance3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.49899, 0, 0)
+mesh = SubResource("BoxMesh_ti7hj")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Area3D/MeshInstance3D2"]
+transform = Transform3D(1.5, 0, 0, 0, 0.993, 0, 0, 0, 0.993, -1.25, -1.5, 0)
+mesh = SubResource("BoxMesh_u63uw")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Area3D/MeshInstance3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 1.5, 0)
+mesh = SubResource("BoxMesh_2u5rv")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.5, 0)
+shape = SubResource("BoxShape3D_o4mmv")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

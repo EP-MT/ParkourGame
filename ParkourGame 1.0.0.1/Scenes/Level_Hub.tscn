@@ -1,0 +1,106 @@
+[gd_scene load_steps=12 format=3 uid="uid://5uowvebd11bq"]
+
+[ext_resource type="Shader" path="res://shaders/Sky.gdshader" id="1_4l5je"]
+[ext_resource type="PackedScene" uid="uid://bn06y04ubv4xt" path="res://Scenes/Player.tscn" id="1_c21fa"]
+[ext_resource type="PackedScene" uid="uid://bqy76nqoev3a" path="res://UI/pause_menu.tscn" id="1_o22t5"]
+[ext_resource type="PackedScene" uid="uid://de53ta6gbbvqd" path="res://Scenes/GOD .tscn" id="1_supqk"]
+[ext_resource type="PackedScene" uid="uid://c65wlxwb1htao" path="res://Scenes/Wall.tscn" id="2_2b457"]
+[ext_resource type="PackedScene" uid="uid://bafiak30n305t" path="res://Scenes/Grapple_Point.tscn" id="6_b387p"]
+[ext_resource type="PackedScene" uid="uid://d2la1hw6lm1c6" path="res://Scenes/ObstacleWall.tscn" id="7_inl5c"]
+[ext_resource type="PackedScene" uid="uid://323k2nvmw6nc" path="res://Scenes/Stairs.tscn" id="8_j2av7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sy7ca"]
+shader = ExtResource("1_4l5je")
+shader_parameter/day_top_color = Color(0.1, 0.6, 1, 1)
+shader_parameter/day_bottom_color = Color(0.4, 0.8, 1, 1)
+shader_parameter/sunset_top_color = Color(0.7, 0.75, 1, 1)
+shader_parameter/sunset_bottom_color = Color(1, 0.5, 0.7, 1)
+shader_parameter/night_top_color = Color(0.02, 0, 0.04, 1)
+shader_parameter/night_bottom_color = Color(0.1, 0, 0.2, 1)
+shader_parameter/horizon_color = Color(0, 0.7, 0.8, 1)
+shader_parameter/horizon_blur = 0.05
+shader_parameter/sun_color = Color(10, 8, 1, 1)
+shader_parameter/sun_sunset_color = Color(10, 0, 0, 1)
+shader_parameter/sun_size = 0.2
+shader_parameter/sun_blur = 10.0
+shader_parameter/moon_color = Color(1, 0.95, 0.7, 1)
+shader_parameter/moon_size = 1.0
+shader_parameter/moon_blur = 0.1
+shader_parameter/clouds_edge_color = Color(0.8, 0.8, 0.98, 1)
+shader_parameter/clouds_top_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_middle_color = Color(0.92, 0.92, 0.98, 1)
+shader_parameter/clouds_bottom_color = Color(0.83, 0.83, 0.94, 1)
+shader_parameter/clouds_speed = 2.0
+shader_parameter/clouds_direction = 0.2
+shader_parameter/clouds_scale = 1.0
+shader_parameter/clouds_cutoff = 0.39
+shader_parameter/clouds_fuzziness = 0.54
+shader_parameter/clouds_weight = 0.0
+shader_parameter/clouds_blur = 1.0
+shader_parameter/stars_speed = 1.0
+shader_parameter/overwritten_time = 0.0
+
+[sub_resource type="Sky" id="Sky_njm3p"]
+sky_material = SubResource("ShaderMaterial_sy7ca")
+
+[sub_resource type="Environment" id="Environment_6nkvd"]
+background_mode = 2
+sky = SubResource("Sky_njm3p")
+ambient_light_source = 3
+reflected_light_source = 2
+ssil_enabled = true
+sdfgi_enabled = true
+
+[node name="Node3D" type="Node3D"]
+metadata/_edit_group_ = true
+
+[node name="Pause" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="PauseMenu" parent="Pause" instance=ExtResource("1_o22t5")]
+process_mode = 0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6nkvd")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, -0.766045, 0.642788, 0, -0.642788, -0.766045, 0, -5.15408, 0)
+
+[node name="plat" parent="." instance=ExtResource("1_supqk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.8, -1.57164)
+
+[node name="plat2" parent="plat" instance=ExtResource("1_supqk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -25)
+
+[node name="Wall3" parent="plat" instance=ExtResource("2_2b457")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.566, 4, -77.202)
+
+[node name="Wall4" parent="plat/Wall3" instance=ExtResource("2_2b457")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -6.44556, 0.2, 13.7482)
+
+[node name="Wall7" parent="plat/Wall3" instance=ExtResource("2_2b457")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000440121, 0.2, 28.1552)
+
+[node name="Player" parent="." instance=ExtResource("1_c21fa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.8041, 0)
+
+[node name="Grapple_point" parent="." instance=ExtResource("6_b387p")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 28, -108.67)
+
+[node name="Thin wall" parent="." instance=ExtResource("7_inl5c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -128)
+
+[node name="Stairs" parent="Thin wall" instance=ExtResource("8_j2av7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -4.63316, -21.901)
+
+[node name="short floor" parent="Thin wall" instance=ExtResource("7_inl5c")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -26.5196, -35.992)
+
+[node name="crouch floor" parent="Thin wall" instance=ExtResource("7_inl5c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -19, -57)
+
+[node name="crouch roof" parent="Thin wall" instance=ExtResource("7_inl5c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7, -60)
+
+[node name="short floor2" parent="Thin wall" instance=ExtResource("7_inl5c")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -23.4844, -85.7691)

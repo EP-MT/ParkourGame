@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://cehv4e5f438dd"]
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_0vk3t"]
+radius = 0.05
+radial_steps = 20
+sections = 2
+
+[sub_resource type="TorusMesh" id="TorusMesh_x8nfp"]
+inner_radius = 0.1
+outer_radius = 0.07
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_nm8ae"]
+radius = 0.034
+height = 0.25
+
+[node name="Grapple_Gun" type="MeshInstance3D"]
+transform = Transform3D(-0.0104718, 0.999945, 0, -0.707068, -0.00740467, -0.707107, -0.707068, -0.00740467, 0.707107, 0.00267702, 0.335175, -0.0131296)
+mesh = SubResource("TubeTrailMesh_0vk3t")
+
+[node name="Tube1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.604789, -0.319911, -0.42468, 0.671315, 0.574256, -0.00444741, 0.611786, -0.31388, 0.424703, 0.000249207, -0.135058, -0.0396392)
+mesh = SubResource("TorusMesh_x8nfp")
+skeleton = NodePath("../..")
+
+[node name="Tube2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.471819, -0.526728, -0.42468, 0.739884, 0.672694, -0.00444741, 0.479541, -0.519655, 0.424703, -0.0242563, -0.132691, -0.0641185)
+mesh = SubResource("TorusMesh_x8nfp")
+skeleton = NodePath("../..")
+
+[node name="Canister1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.707068, -0.0104718, -0.707068, 0.00740464, 0.999945, -0.00740468, 0.707107, 3.09086e-08, 0.707107, 0.0754877, 0.0155383, -0.0300295)
+mesh = SubResource("CapsuleMesh_nm8ae")
+skeleton = NodePath("../..")
+
+[node name="Canister2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.707068, -0.0104718, -0.707068, 0.00740464, 0.999945, -0.00740468, 0.707107, 3.09086e-08, 0.707107, 0.0236675, 0.0124312, -0.072888)
+mesh = SubResource("CapsuleMesh_nm8ae")
+skeleton = NodePath("../..")

@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c7caq6prxcllm"
+path="res://.godot/imported/Arms_Pack.obj-71e55c0815c9e7e8fa366de99e5ae834.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Arms_Pack.obj-71e55c0815c9e7e8fa366de99e5ae834.mesh"]
+
+source_file="res://materials/Arms_Pack.obj"
+dest_files=["res://.godot/imported/Arms_Pack.obj-71e55c0815c9e7e8fa366de99e5ae834.mesh", "res://.godot/imported/Arms_Pack.obj-71e55c0815c9e7e8fa366de99e5ae834.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
